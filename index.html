@@ -1173,19 +1173,19 @@
           nameInput.className = 'scorer-name-input';
           nameInput.value = entry.name || '';
           nameInput.setAttribute('data-id', entry.id);
-          nameInput.addEventListener('input', function () {
-            if (!isTrainer) {
-              var original = scorers.find(function(s) { return s.id === entry.id; });
-              nameInput.value = entry.name || "";
-  return;
-            }
-             var id = parseInt(nameInput.dataset.id, 10);
-    var scorer = scorers.find(s => s.id === id);
-    if (scorer) {
-        scorer.name = nameInput.value;
-        saveToLocal();
-        scheduleSupabaseSave();
+         nameInput.addEventListener('input', function () {
+    if (!isTrainer) {
+        nameInput.value = entry.name || "";
+        return;
     }
+            const id = Number(nameInput.dataset.id);
+    const scorer = scorers.find(s => s.id === id);
+    if (!scorer) return;
+
+    scorer.name = nameInput.value;
+
+    saveToLocal();
+    scheduleSupabaseSave();
 });
           tdName.appendChild(nameInput);
           tr.appendChild(tdName);
